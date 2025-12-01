@@ -2,41 +2,42 @@ import java.util.Comparator;
 
 public class VisitorComparator implements Comparator<Visitor> {
     /**
-     * 比较两个游客：先按年龄升序，年龄相同则按游客类型（成人>儿童>老人）
-     * @param v1 第一个游客
-     * @param v2 第二个游客
-     * @return 比较结果（负=v1在前，正=v2在前，0=相等）
+     * Compares two visitors: first by age in ascending order;
+     * if ages are equal, by visitor type (Adult > Child > Elderly)
+     * @param v1 The first visitor
+     * @param v2 The second visitor
+     * @return Comparison result (negative = v1 comes first, positive = v2 comes first, 0 = equal)
      */
     @Override
     public int compare(Visitor v1, Visitor v2) {
-        // 1. 先比较年龄（升序）
+        // 1. First compare by age (ascending order)
         if (v1.getAge() != v2.getAge()) {
             return v1.getAge() - v2.getAge();
         }
 
-        // 2. 年龄相同，比较游客类型（自定义优先级：成人>儿童>老人）
+        // 2. If ages are equal, compare by visitor type (custom priority: Adult > Child > Elderly)
         String type1 = v1.getVisitorType();
         String type2 = v2.getVisitorType();
 
-        // 定义类型优先级：成人=3，儿童=2，老人=1，其他=0
+        // Define type priority: Adult = 3, Child = 2, Elderly = 1, Others = 0
         int priority1 = getTypePriority(type1);
         int priority2 = getTypePriority(type2);
 
-        return priority2 - priority1; // 优先级高的在前（降序）
+        return priority2 - priority1; // Higher priority comes first (descending order)
     }
 
     /**
-     * 辅助方法：获取游客类型的优先级
-     * @param type 游客类型（成人/儿童/老人/其他）
-     * @return 优先级数值
+     * Helper method: Gets the priority of the visitor type
+     * @param type Visitor type (Adult/Child/Elderly/Other)
+     * @return Priority value
      */
     private int getTypePriority(String type) {
         switch (type) {
-            case "成人":
+            case "Adult":
                 return 3;
-            case "儿童":
+            case "Child":
                 return 2;
-            case "老人":
+            case "Elderly":
                 return 1;
             default:
                 return 0;

@@ -1,19 +1,19 @@
 public class Employee extends Person {
-    // 2个实例变量（Part 1要求）
+    // 2 instance variables (required by Part 1)
     private String employeeId;
     private String responsibleRideType;
 
-    // 默认构造方法（Part 1要求）
+    // Default constructor (required by Part 1)
     public Employee() {}
 
-    // 带参构造方法（同时初始化父类属性，Part 1要求）
+    // Parameterized constructor (initializes parent class properties simultaneously, required by Part 1)
     public Employee(String name, int age, String idCard, String employeeId, String responsibleRideType) {
-        super(name, age, idCard); // 调用父类构造方法
+        super(name, age, idCard); // Call parent class constructor
         this.employeeId = employeeId;
         this.responsibleRideType = responsibleRideType;
     }
 
-    // 所有实例变量的getter和setter（Part 1要求）
+    // Getters and setters for all instance variables (required by Part 1)
     public String getEmployeeId() {
         return employeeId;
     }
@@ -30,9 +30,9 @@ public class Employee extends Person {
         this.responsibleRideType = responsibleRideType;
     }
 
-    // 重写toString()用于打印员工信息
+    // Override toString() to print employee information
     @Override
     public String toString() {
-        return super.toString() + "，员工编号：" + employeeId + "，负责设施类型：" + responsibleRideType;
+        return super.toString() + ", Employee ID: " + employeeId + ", Responsible Ride Type: " + responsibleRideType;
     }
 }

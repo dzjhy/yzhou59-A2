@@ -1,17 +1,17 @@
 import java.util.Queue;
 
 public interface RideInterface {
-    // Part 3：等待队列操作
-    void addVisitorToQueue(Visitor visitor); // 添加游客到队列
-    void removeVisitorFromQueue(); // 移除队列头部游客（FIFO）
-    void printQueue(); // 打印队列所有游客
+    // Part 3: Waiting Queue Operations
+    void addVisitorToQueue(Visitor visitor); // Add a visitor to the queue
+    void removeVisitorFromQueue(); // Remove the front visitor from the queue (FIFO)
+    void printQueue(); // Print all visitors in the queue
 
-    // Part 4：乘坐记录操作
-    void addVisitorToHistory(Visitor visitor); // 添加游客到乘坐记录
-    boolean checkVisitorFromHistory(Visitor visitor); // 检查游客是否在记录中
-    int numberOfVisitors(); // 返回记录中游客数量
-    void printRideHistory(); // 打印乘坐记录（需用Iterator）
+    // Part 4: Ride History Operations
+    void addVisitorToHistory(Visitor visitor); // Add a visitor to the ride history
+    boolean checkVisitorFromHistory(Visitor visitor); // Check if a visitor is in the history
+    int numberOfVisitors(); // Return the number of visitors in the history
+    void printRideHistory(); // Print the ride history (must use Iterator)
 
-    // Part 5：运行设施循环
-    void runOneCycle(); // 运行一个设施循环
+    // Part 5: Ride Operation Cycle
+    void runOneCycle(); // Run one ride operation cycle
 }

@@ -2,29 +2,29 @@ import java.io.*;
 import java.util.*;
 
 public class Ride implements RideInterface {
-    // 3个基础实例变量（含1个Employee类型，Part 1要求）
+    // 3 basic instance variables (including 1 Employee type, required by Part 1)
     private String rideName;
     private String rideType;
-    private Employee operator; // 负责该设施的员工（Part 1要求）
+    private Employee operator; // Employee responsible for this ride (required by Part 1)
 
-    // Part 3：等待队列（Queue<Visitor>，FIFO）
+    // Part 3: Waiting Queue (Queue<Visitor>, FIFO)
     private Queue<Visitor> waitingLine;
 
-    // Part 4A：乘坐记录（LinkedList<Visitor>）
+    // Part 4A: Ride History (LinkedList<Visitor>)
     private LinkedList<Visitor> rideHistory;
 
-    // Part 5：运行属性（最大载客量、运行次数）
-    private int maxRider; // 一个循环最大载客量
-    private int numOfCycles; // 已运行循环次数（默认0）
+    // Part 5: Operation Properties (maximum capacity, number of cycles operated)
+    private int maxRider; // Maximum number of riders per cycle
+    private int numOfCycles; // Number of cycles already operated (default: 0)
 
-    // 默认构造方法（Part 1要求）
+    // Default constructor (required by Part 1)
     public Ride() {
-        this.waitingLine = new LinkedList<>(); // 用LinkedList实现Queue
+        this.waitingLine = new LinkedList<>(); // Implement Queue with LinkedList
         this.rideHistory = new LinkedList<>();
-        this.numOfCycles = 0; // 默认运行次数为0
+        this.numOfCycles = 0; // Default number of cycles is 0
     }
 
-    // 带参构造方法（Part 1要求）
+    // Parameterized constructor (required by Part 1)
     public Ride(String rideName, String rideType, Employee operator, int maxRider) {
         this.rideName = rideName;
         this.rideType = rideType;
@@ -35,7 +35,7 @@ public class Ride implements RideInterface {
         this.numOfCycles = 0;
     }
 
-    // 所有实例变量的getter和setter（Part 1要求）
+    // Getters and setters for all instance variables (required by Part 1)
     public String getRideName() {
         return rideName;
     }
@@ -72,111 +72,111 @@ public class Ride implements RideInterface {
         return numOfCycles;
     }
 
-    // ------------------------------ Part 3：等待队列方法实现 ------------------------------
+    // ------------------------------ Part 3: Waiting Queue Method Implementations ------------------------------
     /**
-     * 添加游客到等待队列
-     * @param visitor 待添加的游客
+     * Adds a visitor to the waiting queue
+     * @param visitor The visitor to be added
      */
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         if (visitor != null) {
-            waitingLine.offer(visitor); // Queue的添加方法（FIFO）
-            System.out.println("成功添加游客【" + visitor.getName() + "】到【" + rideName + "】的等待队列");
+            waitingLine.offer(visitor); // Queue's add method (FIFO)
+            System.out.println("Successfully added visitor [" + visitor.getName() + "] to the waiting queue of [" + rideName + "]");
         } else {
-            System.out.println("添加失败：游客信息不能为空");
+            System.out.println("Add failed: Visitor information cannot be empty");
         }
     }
 
     /**
-     * 从等待队列移除头部游客（FIFO）
+     * Removes the visitor at the front of the waiting queue (FIFO)
      */
     @Override
     public void removeVisitorFromQueue() {
         if (waitingLine.isEmpty()) {
-            System.out.println("移除失败：【" + rideName + "】的等待队列为空");
+            System.out.println("Removal failed: The waiting queue of [" + rideName + "] is empty");
             return;
         }
-        Visitor removedVisitor = waitingLine.poll(); // Queue的移除方法（返回头部元素）
-        System.out.println("成功从【" + rideName + "】的等待队列移除游客：" + removedVisitor.getName());
+        Visitor removedVisitor = waitingLine.poll(); // Queue's remove method (returns front element)
+        System.out.println("Successfully removed visitor from the waiting queue of [" + rideName + "]: " + removedVisitor.getName());
     }
 
     /**
-     * 打印等待队列所有游客
+     * Prints all visitors in the waiting queue
      */
     @Override
     public void printQueue() {
         if (waitingLine.isEmpty()) {
-            System.out.println("【" + rideName + "】的等待队列为空");
+            System.out.println("The waiting queue of [" + rideName + "] is empty");
             return;
         }
-        System.out.println("【" + rideName + "】的等待队列（共" + waitingLine.size() + "人）：");
+        System.out.println("Waiting queue of [" + rideName + "] (total " + waitingLine.size() + " people):");
         int index = 1;
-        for (Visitor visitor : waitingLine) { // 按添加顺序遍历
+        for (Visitor visitor : waitingLine) { // Traverse in the order of addition
             System.out.println(index + ". " + visitor);
             index++;
         }
     }
 
-    // ------------------------------ Part 4A：乘坐记录方法实现 ------------------------------
+    // ------------------------------ Part 4A: Ride History Method Implementations ------------------------------
     /**
-     * 添加游客到乘坐记录
-     * @param visitor 待添加的游客
+     * Adds a visitor to the ride history
+     * @param visitor The visitor to be added
      */
     @Override
     public void addVisitorToHistory(Visitor visitor) {
         if (visitor != null) {
             rideHistory.add(visitor);
-            System.out.println("成功添加游客【" + visitor.getName() + "】到【" + rideName + "】的乘坐记录");
+            System.out.println("Successfully added visitor [" + visitor.getName() + "] to the ride history of [" + rideName + "]");
         } else {
-            System.out.println("添加失败：游客信息不能为空");
+            System.out.println("Add failed: Visitor information cannot be empty");
         }
     }
 
     /**
-     * 检查游客是否在乘坐记录中
-     * @param visitor 待检查的游客
-     * @return true=存在，false=不存在
+     * Checks if a visitor is in the ride history
+     * @param visitor The visitor to be checked
+     * @return true = exists, false = does not exist
      */
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
         if (visitor == null) {
-            System.out.println("检查失败：游客信息不能为空");
+            System.out.println("Check failed: Visitor information cannot be empty");
             return false;
         }
-        // 遍历乘坐记录（按身份证号匹配，避免同名问题）
+        // Traverse ride history (match by ID card number to avoid duplicate name issues)
         for (Visitor v : rideHistory) {
             if (v.getIdCard().equals(visitor.getIdCard())) {
-                System.out.println("检查结果：游客【" + visitor.getName() + "】在【" + rideName + "】的乘坐记录中");
+                System.out.println("Check result: Visitor [" + visitor.getName() + "] is in the ride history of [" + rideName + "]");
                 return true;
             }
         }
-        System.out.println("检查结果：游客【" + visitor.getName() + "】不在【" + rideName + "】的乘坐记录中");
+        System.out.println("Check result: Visitor [" + visitor.getName() + "] is not in the ride history of [" + rideName + "]");
         return false;
     }
 
     /**
-     * 返回乘坐记录中的游客数量
-     * @return 游客数量
+     * Returns the number of visitors in the ride history
+     * @return Number of visitors
      */
     @Override
     public int numberOfVisitors() {
         int count = rideHistory.size();
-        System.out.println("【" + rideName + "】的乘坐记录中共" + count + "名游客");
+        System.out.println("The ride history of [" + rideName + "] contains " + count + " visitors");
         return count;
     }
 
     /**
-     * 打印乘坐记录所有游客（必须用Iterator，Part 4A要求）
+     * Prints all visitors in the ride history (must use Iterator, required by Part 4A)
      */
     @Override
     public void printRideHistory() {
         if (rideHistory.isEmpty()) {
-            System.out.println("【" + rideName + "】的乘坐记录为空");
+            System.out.println("The ride history of [" + rideName + "] is empty");
             return;
         }
-        System.out.println("【" + rideName + "】的乘坐记录（共" + rideHistory.size() + "人）：");
+        System.out.println("Ride history of [" + rideName + "] (total " + rideHistory.size() + " people):");
         int index = 1;
-        Iterator<Visitor> iterator = rideHistory.iterator(); // 使用Iterator遍历
+        Iterator<Visitor> iterator = rideHistory.iterator(); // Traverse using Iterator
         while (iterator.hasNext()) {
             Visitor visitor = iterator.next();
             System.out.println(index + ". " + visitor);
@@ -184,137 +184,137 @@ public class Ride implements RideInterface {
         }
     }
 
-    // ------------------------------ Part 4B：乘坐记录排序方法 ------------------------------
+    // ------------------------------ Part 4B: Ride History Sorting Method ------------------------------
     /**
-     * 按自定义比较器排序乘坐记录
-     * @param comparator 游客比较器（实现Comparator）
+     * Sorts the ride history using a custom comparator
+     * @param comparator Visitor comparator (implements Comparator)
      */
     public void sortRideHistory(VisitorComparator comparator) {
         if (rideHistory.isEmpty()) {
-            System.out.println("排序失败：【" + rideName + "】的乘坐记录为空");
+            System.out.println("Sort failed: The ride history of [" + rideName + "] is empty");
             return;
         }
-        Collections.sort(rideHistory, comparator); // 使用Collections.sort+Comparator
-        System.out.println("成功对【" + rideName + "】的乘坐记录进行排序");
+        Collections.sort(rideHistory, comparator); // Use Collections.sort + Comparator
+        System.out.println("Successfully sorted the ride history of [" + rideName + "]");
     }
 
-    // ------------------------------ Part 5：运行设施循环方法实现 ------------------------------
+    // ------------------------------ Part 5: Ride Operation Cycle Method Implementation ------------------------------
     /**
-     * 运行一个设施循环：从队列取maxRider名游客，添加到乘坐记录
+     * Runs one ride cycle: takes maxRider visitors from the queue and adds them to the ride history
      */
     @Override
     public void runOneCycle() {
-        // 检查1：是否有负责员工
+        // Check 1: Whether there is a responsible employee
         if (operator == null) {
-            System.out.println("运行失败：【" + rideName + "】未分配负责员工，无法启动");
+            System.out.println("Operation failed: No responsible employee assigned to [" + rideName + "], cannot start");
             return;
         }
-        // 检查2：等待队列是否有游客
+        // Check 2: Whether there are visitors in the waiting queue
         if (waitingLine.isEmpty()) {
-            System.out.println("运行失败：【" + rideName + "】的等待队列为空，无法启动");
+            System.out.println("Operation failed: The waiting queue of [" + rideName + "] is empty, cannot start");
             return;
         }
 
-        // 计算本次循环可载客数量（取队列大小和maxRider的最小值）
+        // Calculate the number of riders for this cycle (take the minimum of queue size and maxRider)
         int takeCount = Math.min(waitingLine.size(), maxRider);
-        System.out.println("【" + rideName + "】开始运行第" + (numOfCycles + 1) + "个循环，本次将搭载" + takeCount + "名游客");
+        System.out.println("[" + rideName + "] starts the " + (numOfCycles + 1) + "th cycle, will carry " + takeCount + " visitors this time");
 
-        // 从队列取游客，添加到乘坐记录
+        // Take visitors from the queue and add them to the ride history
         for (int i = 0; i < takeCount; i++) {
-            Visitor visitor = waitingLine.poll(); // 移除队列头部游客
-            rideHistory.add(visitor); // 添加到乘坐记录
-            System.out.println("游客【" + visitor.getName() + "】已乘坐【" + rideName + "】");
+            Visitor visitor = waitingLine.poll(); // Remove the front visitor from the queue
+            rideHistory.add(visitor); // Add to ride history
+            System.out.println("Visitor [" + visitor.getName() + "] has ridden [" + rideName + "]");
         }
 
-        // 运行次数+1
+        // Increment the number of cycles by 1
         numOfCycles++;
-        System.out.println("【" + rideName + "】第" + numOfCycles + "个循环运行完成");
+        System.out.println("[" + rideName + "] completed the " + numOfCycles + "th cycle");
     }
 
-    // ------------------------------ Part 6：导出乘坐记录到文件（CSV格式） ------------------------------
+    // ------------------------------ Part 6: Export Ride History to File (CSV Format) ------------------------------
     /**
-     * 导出乘坐记录到CSV文件（每行一条游客信息，逗号分隔）
-     * @param filePath 文件路径（如：src/ride_history.csv）
+     * Exports ride history to a CSV file (one visitor record per line, separated by commas)
+     * @param filePath File path (e.g.: src/ride_history.csv)
      */
     public void exportRideHistory(String filePath) {
         if (rideHistory.isEmpty()) {
-            System.out.println("导出失败：【" + rideName + "】的乘坐记录为空");
+            System.out.println("Export failed: The ride history of [" + rideName + "] is empty");
             return;
         }
 
-        // 处理文件写入异常（Part 6要求：异常处理）
+        // Handle file writing exceptions (required by Part 6: Exception handling)
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // 写入文件头部（列名）
-            writer.write("姓名,年龄,身份证号,游客类型,是否有快速通行证");
-            writer.newLine(); // 换行
+            // Write file header (column names)
+            writer.write("Name,Age,ID Card Number,Visitor Type,Has Fast Pass");
+            writer.newLine(); // Line break
 
-            // 写入每条游客信息（CSV格式）
+            // Write each visitor's information (CSV format)
             for (Visitor visitor : rideHistory) {
                 String line = String.format("%s,%d,%s,%s,%s",
                         visitor.getName(),
                         visitor.getAge(),
                         visitor.getIdCard(),
                         visitor.getVisitorType(),
-                        visitor.isHasFastPass() ? "是" : "否");
+                        visitor.isHasFastPass() ? "Yes" : "No");
                 writer.write(line);
                 writer.newLine();
             }
 
-            System.out.println("成功导出【" + rideName + "】的乘坐记录到文件：" + filePath);
+            System.out.println("Successfully exported the ride history of [" + rideName + "] to file: " + filePath);
         } catch (IOException e) {
-            System.out.println("导出失败：文件写入错误，原因：" + e.getMessage());
+            System.out.println("Export failed: File writing error, reason: " + e.getMessage());
         }
     }
 
-    // ------------------------------ Part 7：从文件导入乘坐记录（CSV格式） ------------------------------
+    // ------------------------------ Part 7: Import Ride History from File (CSV Format) ------------------------------
     /**
-     * 从CSV文件导入乘坐记录，添加到rideHistory
-     * @param filePath 文件路径（如：src/ride_history.csv）
+     * Imports ride history from a CSV file and adds it to rideHistory
+     * @param filePath File path (e.g.: src/ride_history.csv)
      */
     public void importRideHistory(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
-            System.out.println("导入失败：文件不存在，路径：" + filePath);
+            System.out.println("Import failed: File does not exist, path: " + filePath);
             return;
         }
 
-        // 处理文件读取异常（Part 7要求：异常处理）
+        // Handle file reading exceptions (required by Part 7: Exception handling)
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int lineNum = 0;
             while ((line = reader.readLine()) != null) {
                 lineNum++;
                 if (lineNum == 1) {
-                    continue; // 跳过文件头部（列名）
+                    continue; // Skip file header (column names)
                 }
 
-                // 拆分CSV行（按逗号分隔）
+                // Split CSV line (separated by commas)
                 String[] parts = line.split(",");
                 if (parts.length != 5) {
-                    System.out.println("跳过无效行（第" + lineNum + "行）：列数不足");
+                    System.out.println("Skipping invalid line (line " + lineNum + "): Insufficient columns");
                     continue;
                 }
 
-                // 解析游客信息（处理格式异常）
+                // Parse visitor information (handle format exceptions)
                 try {
                     String name = parts[0].trim();
                     int age = Integer.parseInt(parts[1].trim());
                     String idCard = parts[2].trim();
                     String visitorType = parts[3].trim();
-                    boolean hasFastPass = parts[4].trim().equals("是");
+                    boolean hasFastPass = parts[4].trim().equals("Yes");
 
-                    // 创建游客对象，添加到乘坐记录
+                    // Create visitor object and add to ride history
                     Visitor visitor = new Visitor(name, age, idCard, visitorType, hasFastPass);
                     rideHistory.add(visitor);
-                    System.out.println("成功导入游客：" + visitor.getName());
+                    System.out.println("Successfully imported visitor: " + visitor.getName());
                 } catch (NumberFormatException e) {
-                    System.out.println("跳过无效行（第" + lineNum + "行）：年龄格式错误");
+                    System.out.println("Skipping invalid line (line " + lineNum + "): Invalid age format");
                 }
             }
 
-            System.out.println("导入完成：共从文件【" + filePath + "】导入" + (rideHistory.size()) + "名游客到【" + rideName + "】的乘坐记录");
+            System.out.println("Import completed: A total of " + (rideHistory.size()) + " visitors imported from file [" + filePath + "] to the ride history of [" + rideName + "]");
         } catch (IOException e) {
-            System.out.println("导入失败：文件读取错误，原因：" + e.getMessage());
+            System.out.println("Import failed: File reading error, reason: " + e.getMessage());
         }
     }
 }

@@ -1,20 +1,20 @@
 public abstract class Person {
-    // 3个实例变量（Part 1要求）
+    // 3 instance variables (required by Part 1)
     private String name;
     private int age;
     private String idCard;
 
-    // 默认构造方法（Part 1要求）
+    // Default constructor (required by Part 1)
     public Person() {}
 
-    // 带参构造方法（Part 1要求）
+    // Parameterized constructor (required by Part 1)
     public Person(String name, int age, String idCard) {
         this.name = name;
         this.age = age;
         this.idCard = idCard;
     }
 
-    // 所有实例变量的getter和setter（Part 1要求）
+    // Getters and setters for all instance variables (required by Part 1)
     public String getName() {
         return name;
     }
@@ -39,9 +39,9 @@ public abstract class Person {
         this.idCard = idCard;
     }
 
-    // 重写toString()用于打印人员信息
+    // Override toString() to print person information
     @Override
     public String toString() {
-        return "姓名：" + name + "，年龄：" + age + "，身份证号：" + idCard;
+        return "Name: " + name + ", Age: " + age + ", ID Card Number: " + idCard;
     }
 }
